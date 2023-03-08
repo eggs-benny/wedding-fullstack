@@ -2,7 +2,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, DataTypes) {
-    await queryInterface.createTable('guests', {
+    await queryInterface.createTable('messages', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -13,22 +13,15 @@ module.exports = {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4
       },
-      firstname: {
-        type: DataTypes.STRING,
-        allowNull: false // makes this data type not nullable ie. you need to enter it
+      question: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false
       },
-      lastname: {
+      content: {
         type: DataTypes.STRING,
         allowNull: false
       },
-      email: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
-      rsvp: {
-        type: DataTypes.BOOLEAN
-      },
-      meal: {
+      answer: {
         type: DataTypes.STRING
       },
       createdAt: {
@@ -42,6 +35,6 @@ module.exports = {
     });
   },
   async down(queryInterface, DataTypes) {
-    await queryInterface.dropTable('guests');
+    await queryInterface.dropTable('messages');
   }
 };

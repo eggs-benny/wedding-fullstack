@@ -1,7 +1,7 @@
 'use strict';
 const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Guest extends Model {
+  class Message extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -10,41 +10,30 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
     }
-
-    toJSON(){
-      return { ...this.get(), id: undefined} // this hides the id from db view
-    }
   }
-  Guest.init(
+  Message.init(
     {
       uuid: {
         type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4, // this adds scrambled id rather than 1,2,3,4 etc
+        defaultValue: DataTypes.UUIDV4
       },
-      firstname: {
+      question: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false
+      },
+      content: {
         type: DataTypes.STRING,
         allowNull: false
       },
-      lastname: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
-      email: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
-      rsvp: {
-        type: DataTypes.BOOLEAN
-      },
-      meal: {
+      answer: {
         type: DataTypes.STRING
       }
     },
     {
       sequelize,
-      tableName: 'guests', // ensures table name is lower case
-      modelName: 'Guest'
+      tableName: 'messages',
+      modelName: 'Message'
     }
   );
-  return Guest;
+  return Message;
 };
