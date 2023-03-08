@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "benedictsmith",
+    "password": "root",
+    "database": "wedding_dev",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "benedictsmith",
+    "password": "root",
+    "database": "wedding_test",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "benedictsmith",
+    "password": "root",
+    "database": "wedding_production",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  }
+}
