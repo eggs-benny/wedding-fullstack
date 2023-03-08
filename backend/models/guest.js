@@ -10,9 +10,17 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
     }
+
+    toJSON(){
+      return { ...this.get(), id: undefined}
+    }
   }
   Guest.init(
     {
+      uuid: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+      },
       firstname: {
         type: DataTypes.STRING,
         allowNull: false

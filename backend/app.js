@@ -9,7 +9,7 @@ app.post('/guests', async (req, res) => {
   const { firstname, lastname, email, rsvp, meal } = req.body;
 
   try {
-    const guest = Guest.create({ firstname, lastname, email, rsvp, meal });
+    const guest = await Guest.create({ firstname, lastname, email, rsvp, meal });
     return res.json(guest);
   } catch (error) {
     console.error(error);
@@ -19,6 +19,6 @@ app.post('/guests', async (req, res) => {
 
 app.listen({ port: PORT }, async () => {
   console.log(`Server up on http:localhost:${PORT}`);
-  await sequelize.sync({ force: true });
-  console.log('Database synced');
+  await sequelize.authenticate()
+  console.log('Database connected');
 });
