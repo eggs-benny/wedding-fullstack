@@ -1,7 +1,5 @@
 const { Guest } = require('../models');
 
-// add a guest
-
 const guestsController = {
   getAllGuests: async (req, res) => {
     try {
