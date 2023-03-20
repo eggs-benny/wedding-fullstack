@@ -1,6 +1,6 @@
 const express = require('express'); // server
 const PORT = 5001; // port number
-const { sequelize, Guest } = require('./models');
+const { sequelize, Guest, Message } = require('./models');
 
 const app = express();
 app.use(express.json());
@@ -40,6 +40,21 @@ app.get('/guests/:uuid', async (req, res) => {
   } catch (error) {
     console.error(error)
     return res.status(500).json({ error: "Something went wrong"})
+  }
+})
+
+app.post('/messages', async (req, res) => {
+  const { guestUuid, question, content, answer } = req.body; // ensure all headers included here
+
+  try {
+    const guest = await Guest.findOne({where: {uuid: guestUuid}})
+
+    const message = await Message.create({ question, content, answer, guestId: guest.id });
+    
+    return res.json(message);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json(error);
   }
 })
 

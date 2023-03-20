@@ -7,8 +7,14 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate(models) {
+    static associate({ Guest }) {
       // define association here
+      // guestID
+      this.belongsTo(Guest, { foreignKey: 'guestId', as: 'guest'});
+    }
+
+    toJSON() {
+      return { ...this.get(), id: undefined, guestId: undefined }; // this hides the id & guest id from db view
     }
   }
   Message.init(
@@ -27,7 +33,11 @@ module.exports = (sequelize, DataTypes) => {
       },
       answer: {
         type: DataTypes.STRING
-      }
+      },
+      guestId: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+      },
     },
     {
       sequelize,

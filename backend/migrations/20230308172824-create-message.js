@@ -24,6 +24,10 @@ module.exports = {
       answer: {
         type: DataTypes.STRING
       },
+      guestId: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+      },
       createdAt: {
         allowNull: false,
         type: DataTypes.DATE
