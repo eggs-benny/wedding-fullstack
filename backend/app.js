@@ -1,125 +1,138 @@
 const express = require('express'); // server
-const PORT = 5001; // port number
-const { sequelize, Guest, Message } = require('./models');
+const { sequelize } = require('./models');
+let cors = require('cors')
+
+//routes
+const guests = require('./routes/api/guests')
 
 const app = express();
+
 app.use(express.json());
 
+// cors
+app.use(cors({ origin: true, credentials: true }));
+
 // add a guest
-app.post('/guests', async (req, res) => {
-  const { firstname, lastname, email, rsvp, mealStarter, mealMain } = req.body; // ensure all headers included here
 
-  try {
-    const guest = await Guest.create({
-      firstname,
-      lastname,
-      email,
-      rsvp,
-      mealStarter,
-      mealMain
-    });
-    return res.json(guest);
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json(error);
-  }
-});
+app.get('/', (req, res) => res.send('Hello, world'))
 
-// get all guests
-app.get('/guests', async (req, res) => {
-  try {
-    const guests = await Guest.findAll();
-    return res.json(guests);
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({ error: 'Something went wrong' });
-  }
-});
+app.use('/guests', guests)
 
-// find a guest
-app.get('/guests/:uuid', async (req, res) => {
-  const uuid = req.params.uuid;
-  try {
-    const guest = await Guest.findOne({
-      where: { uuid },
-      include: 'messages'
-    });
-    return res.json(guest);
-  } catch (error) {
-    console.error(error);
-    return res.status(400).json({ error: 'Something went wrong' });
-  }
-});
+// app.post('/guests', async (req, res) => {
+//   const { firstname, lastname, email, rsvp, mealStarter, mealMain } = req.body; // ensure all headers included here
 
-// delete a guest
-app.delete('/guests/:uuid', async (req, res) => {
-  const uuid = req.params.uuid;
-  try {
-    const guest = await Guest.findOne({ where: { uuid } });
-    await guest.destroy();
-    return res.json({ message: 'Guest deleted!' });
-  } catch (error) {
-    console.error(error);
-    return res.status(400).json({ error: 'Something went wrong' });
-  }
-});
+//   try {
+//     const guest = await Guest.create({
+//       firstname,
+//       lastname,
+//       email,
+//       rsvp,
+//       mealStarter,
+//       mealMain
+//     });
+//     return res.json(guest);
+//   } catch (error) {
+//     console.error(error);
+//     return res.status(500).json(error);
+//   }
+// });
 
-// update a guest
-app.put('/guests/:uuid', async (req, res) => {
-  const uuid = req.params.uuid;
-  const { firstname, lastname, email, rsvp, mealStarter, mealMain } = req.body;
-  try {
-    const guest = await Guest.findOne({ where: { uuid } });
+// // get all guests
+// app.get('/guests', async (req, res) => {
+//   try {
+//     const guests = await Guest.findAll();
+//     return res.json(guests);
+//   } catch (error) {
+//     console.error(error);
+//     return res.status(500).json({ error: 'Something went wrong' });
+//   }
+// });
 
-    guest.firstname = firstname;
-    guest.lastname = lastname;
-    guest.email = email;
-    guest.rsvp = rsvp;
-    guest.mealStarter = mealStarter;
-    guest.mealMain = mealMain;
+// // find a guest
+// app.get('/guests/:uuid', async (req, res) => {
+//   const uuid = req.params.uuid;
+//   try {
+//     const guest = await Guest.findOne({
+//       where: { uuid },
+//       include: 'messages'
+//     });
+//     return res.json(guest);
+//   } catch (error) {
+//     console.error(error);
+//     return res.status(400).json({ error: 'Something went wrong' });
+//   }
+// });
 
-    await guest.save();
+// // delete a guest
+// app.delete('/guests/:uuid', async (req, res) => {
+//   const uuid = req.params.uuid;
+//   try {
+//     const guest = await Guest.findOne({ where: { uuid } });
+//     await guest.destroy();
+//     return res.json({ message: 'Guest deleted!' });
+//   } catch (error) {
+//     console.error(error);
+//     return res.status(400).json({ error: 'Something went wrong' });
+//   }
+// });
 
-    return res.json(guest);
-  } catch (error) {
-    console.error(error);
-    return res.status(400).json({ error: 'Something went wrong' });
-  }
-});
+// // update a guest
+// app.put('/guests/:uuid', async (req, res) => {
+//   const uuid = req.params.uuid;
+//   const { firstname, lastname, email, rsvp, mealStarter, mealMain } = req.body;
+//   try {
+//     const guest = await Guest.findOne({ where: { uuid } });
 
-// add a message
-app.post('/messages', async (req, res) => {
-  const { guestUuid, needsReply, content, reply } = req.body; // ensure all headers included here
+//     guest.firstname = firstname;
+//     guest.lastname = lastname;
+//     guest.email = email;
+//     guest.rsvp = rsvp;
+//     guest.mealStarter = mealStarter;
+//     guest.mealMain = mealMain;
 
-  try {
-    const guest = await Guest.findOne({ where: { uuid: guestUuid } });
+//     await guest.save();
 
-    const message = await Message.create({
-      needsReply,
-      content,
-      reply,
-      guestId: guest.id
-    });
+//     return res.json(guest);
+//   } catch (error) {
+//     console.error(error);
+//     return res.status(400).json({ error: 'Something went wrong' });
+//   }
+// });
 
-    return res.json(message);
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json(error);
-  }
-});
+// // add a message
+// app.post('/messages', async (req, res) => {
+//   const { guestUuid, needsReply, content, reply } = req.body; // ensure all headers included here
 
-// get all messages
-app.get('/messages', async (req, res) => {
-  try {
-    const messages = await Message.findAll({ include: 'guest' });
+//   try {
+//     const guest = await Guest.findOne({ where: { uuid: guestUuid } });
 
-    return res.json(messages);
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json(error);
-  }
-});
+//     const message = await Message.create({
+//       needsReply,
+//       content,
+//       reply,
+//       guestId: guest.id
+//     });
 
+//     return res.json(message);
+//   } catch (error) {
+//     console.error(error);
+//     return res.status(500).json(error);
+//   }
+// });
+
+// // get all messages
+// app.get('/messages', async (req, res) => {
+//   try {
+//     const messages = await Message.findAll({ include: 'guest' });
+
+//     return res.json(messages);
+//   } catch (error) {
+//     console.error(error);
+//     return res.status(500).json(error);
+//   }
+// });
+
+const PORT = 5001; // port number
 app.listen({ port: PORT }, async () => {
   console.log(`Server up on http:localhost:${PORT}`);
   await sequelize.authenticate(); // checks db password etc
