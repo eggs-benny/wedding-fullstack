@@ -9,36 +9,63 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate({ Message }) {
       // define association here
-      this.hasMany(Message, {foreignKey: 'guestId'})
+      this.hasMany(Message, { foreignKey: 'guestId', as: 'messages' });
     }
 
-    toJSON(){
-      return { ...this.get(), id: undefined} // this hides the id from db view
+    toJSON() {
+      return { ...this.get(), id: undefined }; // this hides the id from db view
     }
   }
   Guest.init(
     {
       uuid: {
         type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4, // this adds scrambled id rather than 1,2,3,4 etc
+        defaultValue: DataTypes.UUIDV4 // this adds scrambled id rather than 1,2,3,4 etc
       },
       firstname: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        validate: {
+          notNull: { msg: 'Guest must have a first name' },
+          notEmpty: { msg: 'First name must not be empty' }
+        }
       },
       lastname: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        validate: {
+          notNull: { msg: 'Guest must have a last name' },
+          notEmpty: { msg: 'Last name must not be empty' }
+        }
       },
       email: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        validate: {
+          notNull: { msg: 'Guest must have an email' },
+          isEmail: { msg: 'Must be a valid email address'}
+        }
       },
       rsvp: {
         type: DataTypes.BOOLEAN
       },
-      meal: {
-        type: DataTypes.STRING
+      mealStarter: {
+        type: DataTypes.STRING,
+        validate: {
+          isIn: {
+            args: [['fish', 'veggie']],
+            msg: 'Options are either `fish` or `veggie`'
+          }
+        }
+      },
+      mealMain: {
+        type: DataTypes.STRING,
+        validate: {
+          isIn: {
+            args: [['beef', 'veggie']],
+            msg: 'Options are either `beef` or `veggie`'
+          }
+        }
       }
     },
     {

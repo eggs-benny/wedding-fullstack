@@ -28,7 +28,10 @@ module.exports = {
       rsvp: {
         type: DataTypes.BOOLEAN
       },
-      meal: {
+      mealStarter: {
+        type: DataTypes.STRING
+      },
+      mealMain: {
         type: DataTypes.STRING
       },
       createdAt: {

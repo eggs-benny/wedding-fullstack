@@ -23,16 +23,23 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4
       },
-      question: {
+      needsReply: {
         type: DataTypes.BOOLEAN,
-        allowNull: false
+        allowNull: false,
       },
       content: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        validate: {
+          notNull: { msg: 'Message must have content' },
+          notEmpty: { msg: 'Content cannot be empty' }
+        }
       },
-      answer: {
-        type: DataTypes.STRING
+      reply: {
+        type: DataTypes.STRING,
+        validate: {
+          notEmpty: { msg: 'Reply cannot be empty' }
+        }
       },
       guestId: {
         type: DataTypes.INTEGER,

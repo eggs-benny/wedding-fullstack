@@ -13,7 +13,7 @@ module.exports = {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4
       },
-      question: {
+      needsReply: {
         type: DataTypes.BOOLEAN,
         allowNull: false
       },
@@ -21,7 +21,7 @@ module.exports = {
         type: DataTypes.STRING,
         allowNull: false
       },
-      answer: {
+      reply: {
         type: DataTypes.STRING
       },
       guestId: {
