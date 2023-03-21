@@ -16,8 +16,8 @@ export function Homepage({ navigate }) {
   return (
     <>
       <h1>Welcome to Ben & Laura's Wedding</h1>
-      <div class="container">
-        <form class="enter-password" onSubmit={handleSubmit}>
+      <div className="container">
+        <form className="enter-password" onSubmit={handleSubmit}>
         <h2>Enter password to unlock guest details:</h2>
         <input
           placeholder="enter password"

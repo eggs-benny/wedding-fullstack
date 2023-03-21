@@ -4,3 +4,8 @@ Backend TO DO:
 
 Frontend TO DO:
 - Countdown clock
+- NavBar:
+-- Home
+-- Schedule
+-- Travel
+-- Q&A
