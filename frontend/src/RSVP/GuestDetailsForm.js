@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { RsvpQuestions } from './RsvpQuestions';
 
 function useFormFields(initialState) {
   const [fields, setValues] = useState(initialState);
@@ -15,14 +16,14 @@ function useFormFields(initialState) {
   ];
 }
 
-export function RsvpForm() {
+export function GuestDetailsForm() {
   const [fields, handleFieldChange] = useFormFields({
     firstName: '',
     lastName: '',
     email: ''
   });
 
-  async function handleSubmit(event) {
+  async function handleSubmitDetails(event) {
     event.preventDefault();
     if (
       fields.email === '' ||
@@ -58,8 +59,8 @@ export function RsvpForm() {
 
   return (
     <>
-      <form className="enter-password" onSubmit={handleSubmit}>
-        <h2>Enter password to unlock guest details:</h2>
+      <form className="guest-details" onSubmit={handleSubmitDetails}>
+      <h3>Enter your name & email.</h3>
         <input
           placeholder="First Name"
           id="firstName"
@@ -89,6 +90,7 @@ export function RsvpForm() {
           value="submit"
         ></input>
       </form>
+      <RsvpQuestions/>
     </>
   );
 }
