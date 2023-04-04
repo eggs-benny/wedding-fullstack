@@ -1,0 +1,9 @@
+.Guest {
+  border-radius: 10px;
+  border-bottom: black;
+  border-style: solid;
+  margin-bottom: 1rem;
+  max-width:fit-content;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}

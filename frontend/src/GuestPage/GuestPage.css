@@ -1,0 +1,18 @@
+.all-guests {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  grid-column-gap: min(1rem, 5%);
+}
+
+
+h3.black {
+  color: black;
+}
+
+h3.green {
+  color: green;
+}
+
+h3.red {
+  color: red;
+}
