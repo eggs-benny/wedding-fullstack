@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  backend:
+    container_name: wedding-backend
+    image: wedding-backend:0.0.1
+    build: .
+    ports:
+      - '3001:3001'
+    depends_on:
+      - db
+    environment:
+      NODE_ENV: development
+      POSTGRES_USER: benedictsmith
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: wedding_dev
+      POSTGRES_HOST: 192.168.80.2
+  db:
+    container_name: db
+    image: "postgres:15.2"
+    environment:
+      POSTGRES_USER: benedictsmith
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: wedding_dev
+    ports:
+    - '5432:5432'

@@ -1,6 +1,14 @@
 {
+ "name": "wedding-backend",
+ "version": "1.0.0",
+ "description": "Wedding backend",
+ "main": "app.js",
+ "scripts": {
+  "start": "node app.js"
+ },
   "dependencies": {
     "cors": "^2.8.5",
+    "docker-compose": "^0.23.19",
     "express": "^4.18.2",
     "nodemon": "^2.0.21",
     "pg": "^8.10.0",
